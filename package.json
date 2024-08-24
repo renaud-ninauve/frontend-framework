@@ -10,5 +10,11 @@
   "license": "ISC",
   "description": "A project to learn how to create a frontend framework",
   "private": true,
-  "workspaces": ["packages/runtime"]
+  "workspaces": [
+    "packages/runtime"
+  ],
+  "devDependencies": {
+    "jsdom": "^24.1.1",
+    "vitest": "^2.0.5"
+  }
 }

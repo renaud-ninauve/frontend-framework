@@ -1,1 +1,1 @@
-console.log('hello')
+export { h, hFragment, hString } from './h'
