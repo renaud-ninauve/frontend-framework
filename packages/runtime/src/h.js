@@ -48,6 +48,8 @@ function createAttributes(vdom) {
         }
         if (key === 'class') {
             addClass(value, elementNode);
+        } else if (key === 'style') {
+            addStyle(value, elementNode);
         } else {
             elementNode.setAttribute(key, value);
         }
@@ -60,6 +62,12 @@ function addClass(classValue, elementNode) {
     }
     if (Array.isArray(classValue)) {
         elementNode.className = classValue.join(' ');
+    }
+}
+
+function addStyle(styleValue, elementNode) {
+    for(const [key, value] of Object.entries(styleValue)) {
+        elementNode.style[key] = value;
     }
 }
 

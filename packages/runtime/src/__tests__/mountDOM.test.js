@@ -134,3 +134,14 @@ test('element with classes as array', () => {
     const actualElement = parent.children[0];
     expect(actualElement.className).toBe('class1 class2');
 });
+
+test('element with style', () => {
+    const vdom = h('h1', {'style': {color: 'red'}});
+    const parent = document.body;
+
+    mountDOM(vdom, parent);
+
+    expect(parent.childElementCount).toBe(1);
+    const actualElement = parent.children[0];
+    expect(actualElement.style.cssText).match(/.*color *: *red.*/);
+});
