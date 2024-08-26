@@ -97,3 +97,18 @@ test('fragment', () => {
     expect(vdom.children[0].el).toBe(actualChild1);
     expect(vdom.children[1].el).toBe(actualChild2);
 });
+
+test('element with events', () => {
+    const expectedOnClick = vi.fn();
+    const vdom = h('button', {'on': {'click': expectedOnClick}});
+    const parent = document.body;
+
+    mountDOM(vdom, parent);
+
+    expect(parent.childElementCount).toBe(1);
+    const actualElement = parent.children[0];
+    actualElement.click();
+    expect(expectedOnClick).toHaveBeenCalled();
+
+    expect(vdom.listeners).toContain(expectedOnClick);
+});

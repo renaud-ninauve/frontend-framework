@@ -31,12 +31,33 @@ function createElementNode(vdom, parent) {
     const elementNode = document.createElement(vdom.tag);
     parent.append(elementNode);
     vdom.el = elementNode;
+  
+    createAttributes(vdom);
+    createListeners(vdom);
 
-    for(const [key, value] of Object.entries(vdom.props)) {
-         elementNode.setAttribute(key, value);
-    }
     for(const child of vdom.children) {
         mountDOM(child, elementNode);
+    }
+}
+
+function createAttributes(vdom) {
+    const elementNode = vdom.el;
+    for(const [key, value] of Object.entries(vdom.props)) {
+        if (key !== 'on') {
+            elementNode.setAttribute(key, value);
+        }
+    }
+}
+
+function createListeners(vdom) {
+    if (!vdom.props.on) {
+        return;
+    }
+    const elementNode = vdom.el;
+    vdom.listeners = [];
+    for(const [event, listener] of Object.entries(vdom.props.on)) {
+        elementNode.addEventListener(event, listener);
+        vdom.listeners.push(listener);
     }
 }
 
