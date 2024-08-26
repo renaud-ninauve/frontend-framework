@@ -112,3 +112,25 @@ test('element with events', () => {
 
     expect(vdom.listeners).toContain(expectedOnClick);
 });
+
+test('element with classes as string', () => {
+    const vdom = h('h1', {'class': "class1 class2"});
+    const parent = document.body;
+
+    mountDOM(vdom, parent);
+
+    expect(parent.childElementCount).toBe(1);
+    const actualElement = parent.children[0];
+    expect(actualElement.className).toBe('class1 class2');
+});
+
+test('element with classes as array', () => {
+    const vdom = h('h1', {'class': ['class1', 'class2']});
+    const parent = document.body;
+
+    mountDOM(vdom, parent);
+
+    expect(parent.childElementCount).toBe(1);
+    const actualElement = parent.children[0];
+    expect(actualElement.className).toBe('class1 class2');
+});

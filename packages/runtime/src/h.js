@@ -43,9 +43,23 @@ function createElementNode(vdom, parent) {
 function createAttributes(vdom) {
     const elementNode = vdom.el;
     for(const [key, value] of Object.entries(vdom.props)) {
-        if (key !== 'on') {
+        if (key === 'on') {
+            continue;
+        }
+        if (key === 'class') {
+            addClass(value, elementNode);
+        } else {
             elementNode.setAttribute(key, value);
         }
+    }
+}
+
+function addClass(classValue, elementNode) {
+    if (typeof classValue === 'string') {
+        elementNode.className = classValue;
+    }
+    if (Array.isArray(classValue)) {
+        elementNode.className = classValue.join(' ');
     }
 }
 
