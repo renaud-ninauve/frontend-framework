@@ -1,4 +1,4 @@
-import {hString, DOM_TYPES} from '../h'
+import {hString, DOM_TYPES} from '../index'
 import {expect, test} from 'vitest'
 
 test('string element', () => {

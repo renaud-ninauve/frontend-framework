@@ -1,4 +1,4 @@
-import {h, hString, hFragment, DOM_TYPES} from '../h'
+import {h, hString, hFragment, DOM_TYPES} from '../index'
 import {expect, test} from 'vitest'
 
 test('tag only', () => {

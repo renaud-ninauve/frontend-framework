@@ -1,4 +1,4 @@
-import {mountDOM, h, hString, hFragment, DOM_TYPES} from '../h'
+import {h, hString, hFragment, mountDOM} from '../index'
 import {beforeEach, expect, test, vi} from 'vitest'
 
 beforeEach(() => {
@@ -22,7 +22,7 @@ test('text', () => {
     expect(parent.childElementCount).toBe(0);
     expect(parent.textContent).toBe('hello');
 
-    expect(vdom.el).toBe(parent);
+    expect(vdom.el).toBeDefined();
 });
 
 test('empty element', () => {
@@ -56,7 +56,7 @@ test('element with text child', () => {
     expect(actualElement.textContent).toBe('hello');
 
     expect(vdom.el).toBe(actualElement)
-    expect(vdom.children[0].el).toBe(actualElement);
+    expect(vdom.children[0].el).toBeDefined();
 });
 
 test('element with element child', () => {

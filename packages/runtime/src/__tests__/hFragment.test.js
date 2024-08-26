@@ -1,4 +1,4 @@
-import {h, hFragment, hString, DOM_TYPES} from '../h'
+import {h, hFragment, hString, DOM_TYPES} from '../index'
 import {expect, test} from 'vitest'
 
 test('children of type element and text', () => {

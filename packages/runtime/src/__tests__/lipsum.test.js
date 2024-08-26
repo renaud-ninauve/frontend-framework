@@ -1,4 +1,4 @@
-import {h, hFragment, lipsum, LIPSUM} from '../h'
+import {h, hFragment, lipsum, LIPSUM} from '../index'
 import {expect, test} from 'vitest'
 
 test('lipsum', () => {
