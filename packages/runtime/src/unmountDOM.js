@@ -20,7 +20,23 @@ function removeTextNode(vdom) {
 }
 
 function removeElementNode(vdom) {
+    vdom.el.remove();
+    if (vdom.props.on) {
+        for(const [event, listener] of Object.entries(vdom.props.on)) {
+            vdom.el.removeEventListener(event, listener);
+        }
+    }
+
+    vdom.el = undefined;
+    vdom.listeners = undefined;
+    
+    for(const child of vdom.children) {
+        unmountDOM(child);
+    }
 }
 
 function removeFragmentNode(vdom) {
+    for(const child of vdom.children) {
+        unmountDOM(child);
+    }
 }
