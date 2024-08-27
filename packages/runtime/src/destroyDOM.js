@@ -1,6 +1,6 @@
 import { DOM_TYPES } from './h';
 
-export function unmountDOM(vdom) {
+export function destroyDOM(vdom) {
     switch(vdom.type) {
         case DOM_TYPES.TEXT:
             removeTextNode(vdom);
@@ -31,12 +31,12 @@ function removeElementNode(vdom) {
     vdom.listeners = undefined;
     
     for(const child of vdom.children) {
-        unmountDOM(child);
+        destroyDOM(child);
     }
 }
 
 function removeFragmentNode(vdom) {
     for(const child of vdom.children) {
-        unmountDOM(child);
+        destroyDOM(child);
     }
 }

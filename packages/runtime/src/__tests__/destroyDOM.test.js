@@ -1,4 +1,4 @@
-import {mountDOM, unmountDOM, h, hString, hFragment} from '../index'
+import {mountDOM, destroyDOM, h, hString, hFragment} from '../index'
 import {beforeEach, expect, test, vi} from 'vitest'
 
 beforeEach(() => {
@@ -11,7 +11,7 @@ test('text', () => {
     const parent = document.body;
 
     mountDOM(vdom, parent);
-    unmountDOM(vdom);
+    destroyDOM(vdom);
 
     expect(parent.childElementCount).toBe(0);
     expect(parent.textContent).toBe('');
@@ -24,7 +24,7 @@ test('empty element', () => {
     const parent = document.body;
 
     mountDOM(vdom, parent);
-    unmountDOM(vdom);
+    destroyDOM(vdom);
 
     expect(parent.childElementCount).toBe(0);
 
@@ -36,7 +36,7 @@ test('empty element', () => {
     const parent = document.body;
 
     mountDOM(vdom, parent);
-    unmountDOM(vdom);
+    destroyDOM(vdom);
 
     expect(parent.childElementCount).toBe(0);
 
@@ -48,7 +48,7 @@ test('element with text child', () => {
     const parent = document.body;
    
     mountDOM(vdom, parent);
-    unmountDOM(vdom);
+    destroyDOM(vdom);
 
     expect(parent.childElementCount).toBe(0);
 
@@ -61,7 +61,7 @@ test('element with element child', () => {
     const parent = document.body;
 
     mountDOM(vdom, parent);
-    unmountDOM(vdom);
+    destroyDOM(vdom);
 
     expect(parent.childElementCount).toBe(0);
     
@@ -75,7 +75,7 @@ test('element with events', () => {
     const parent = document.body;
 
     mountDOM(vdom, parent);
-    unmountDOM(vdom);
+    destroyDOM(vdom);
 
     expect(vdom.listeners).toBeUndefined();
 });
@@ -85,7 +85,7 @@ test('fragment', () => {
     const parent = document.body;
 
     mountDOM(vdom, parent);
-    unmountDOM(vdom);
+    destroyDOM(vdom);
     
     expect(parent.childElementCount).toBe(0);
    
