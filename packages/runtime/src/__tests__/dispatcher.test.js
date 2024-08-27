@@ -75,3 +75,18 @@ test('subscribe twice', () => {
     expect(handler).toHaveBeenCalledOnce();
     expect(handler).toHaveBeenLastCalledWith(payload);
 });
+
+test('afther handlers', () => {
+    const [handler, after1, after2] = [vi.fn(), vi.fn(), vi.fn()];
+    const dispatcher = new Dispatcher();
+    const payload = {'hello': 'world'};  
+    dispatcher.subscribe('command-test', handler);
+    dispatcher.afterEveryCommand(after1);
+    dispatcher.afterEveryCommand(after2);
+
+    dispatcher.dispatch('command-test', payload);
+    
+    expect(handler).toHaveBeenLastCalledWith(payload);
+    expect(after1).toHaveBeenLastCalledWith(payload);
+    expect(after2).toHaveBeenLastCalledWith(payload);
+});
