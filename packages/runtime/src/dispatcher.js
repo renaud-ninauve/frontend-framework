@@ -22,6 +22,13 @@ export class Dispatcher {
 
     afterEveryCommand(handler) {
         this.#afters.push(handler);
+        return () => {
+            const index = this.#afters.indexOf(handler);
+            if (index < 0) {
+                return;
+            }
+            this.#afters.splice(index, 1);
+        };
     }
 
     dispatch(command, payload) {

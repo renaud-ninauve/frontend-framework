@@ -90,3 +90,19 @@ test('afther handlers', () => {
     expect(after1).toHaveBeenLastCalledWith(payload);
     expect(after2).toHaveBeenLastCalledWith(payload);
 });
+
+test('afther handlers unsubscribe', () => {
+    const [handler, after1, after2] = [vi.fn(), vi.fn(), vi.fn()];
+    const dispatcher = new Dispatcher();
+    const payload = {'hello': 'world'};  
+    dispatcher.subscribe('command-test', handler);
+    const unsubscribe1 = dispatcher.afterEveryCommand(after1);
+    dispatcher.afterEveryCommand(after2);
+    unsubscribe1();
+
+    dispatcher.dispatch('command-test', payload);
+    
+    expect(handler).toHaveBeenLastCalledWith(payload);
+    expect(after1).not.toHaveBeenCalled();
+    expect(after2).toHaveBeenLastCalledWith(payload);
+});
