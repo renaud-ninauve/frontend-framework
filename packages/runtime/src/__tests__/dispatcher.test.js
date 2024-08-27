@@ -12,14 +12,66 @@ test('dispatch', () => {
     expect(handler).toHaveBeenLastCalledWith(payload);
 });
 
-test('unsubscribe', () => {
+test('dispatch unknown command', () => {
     const handler = vi.fn();
     const dispatcher = new Dispatcher();
     const payload = {'hello': 'world'};  
-    const unsubscribe = dispatcher.subscribe('command-test', handler);
-    unsubscribe();
+    dispatcher.subscribe('command-test', handler);
+    
+    dispatcher.dispatch('command-unknown', payload);
+});
+
+test('dispatch several', () => {
+    const [handler1, handler2] = [vi.fn(), vi.fn()];
+    const dispatcher = new Dispatcher();
+    const payload = {'hello': 'world'};  
+    dispatcher.subscribe('command-test', handler1);
+    dispatcher.subscribe('command-test', handler2);
 
     dispatcher.dispatch('command-test', payload);
     
-    expect(handler).not.toHaveBeenCalled();
+    expect(handler1).toHaveBeenLastCalledWith(payload);
+    expect(handler2).toHaveBeenLastCalledWith(payload);
+});
+
+test('unsubscribe', () => {
+    const [handler1, handler2] = [vi.fn(), vi.fn()];
+    const dispatcher = new Dispatcher();
+    const payload = {'hello': 'world'};  
+    const unsubscribe1 = dispatcher.subscribe('command-test', handler1);
+    dispatcher.subscribe('command-test', handler2);
+    unsubscribe1();
+
+    dispatcher.dispatch('command-test', payload);
+    
+    expect(handler1).not.toHaveBeenCalled();
+    expect(handler2).toHaveBeenLastCalledWith(payload);
+});
+
+
+test('unsubscribe twice', () => {
+    const [handler1, handler2] = [vi.fn(), vi.fn()];
+    const dispatcher = new Dispatcher();
+    const payload = {'hello': 'world'};  
+    const unsubscribe1 = dispatcher.subscribe('command-test', handler1);
+    dispatcher.subscribe('command-test', handler2);
+    unsubscribe1();
+    unsubscribe1();
+
+    dispatcher.dispatch('command-test', payload);
+    
+    expect(handler1).not.toHaveBeenCalled();
+    expect(handler2).toHaveBeenLastCalledWith(payload);
+});
+
+test('subscribe twice', () => {
+    const handler = vi.fn();
+    const dispatcher = new Dispatcher();
+    const payload = {'hello': 'world'};  
+    dispatcher.subscribe('command-test', handler);
+    
+    dispatcher.dispatch('command-test', payload);
+    
+    expect(handler).toHaveBeenCalledOnce();
+    expect(handler).toHaveBeenLastCalledWith(payload);
 });

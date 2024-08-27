@@ -6,9 +6,15 @@ export class Dispatcher {
             this.#subscribers.set(command, []);
         }
         const handlers = this.#subscribers.get(command);
+        if (handlers.includes(handler)) {
+            return () => {};
+        }
         handlers.push(handler);
         return () => {
             const index = handlers.indexOf(handler);
+            if (index < 0) {
+                return;
+            }
             handlers.splice(index, 1);
         };
     }
