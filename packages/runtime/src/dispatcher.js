@@ -7,6 +7,10 @@ export class Dispatcher {
         }
         const handlers = this.#subscribers.get(command);
         handlers.push(handler);
+        return () => {
+            const index = handlers.indexOf(handler);
+            handlers.splice(index, 1);
+        };
     }
 
     dispatch(command, payload) {
