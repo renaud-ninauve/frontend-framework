@@ -11,24 +11,12 @@ export class Dispatcher {
             return () => {};
         }
         handlers.push(handler);
-        return () => {
-            const index = handlers.indexOf(handler);
-            if (index < 0) {
-                return;
-            }
-            handlers.splice(index, 1);
-        };
+        return () => unsubscribe(handlers, handler);
     }
 
     afterEveryCommand(handler) {
         this.#afters.push(handler);
-        return () => {
-            const index = this.#afters.indexOf(handler);
-            if (index < 0) {
-                return;
-            }
-            this.#afters.splice(index, 1);
-        };
+        return () => unsubscribe(this.#afters, handler);
     }
 
     dispatch(command, payload) {
@@ -42,4 +30,12 @@ export class Dispatcher {
             handler(payload);
         }
     }
+}
+
+function unsubscribe(handlers, handler) {
+    const index = handlers.indexOf(handler);
+    if (index < 0) {
+        return;
+    }
+    handlers.splice(index, 1);
 }
